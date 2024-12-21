@@ -53,7 +53,7 @@ const App = () => {
           }
         />
       </Routes>
-      <Footer />
+      { role !== "admin" && <Footer />}
     </BrowserRouter>
   )
 }
