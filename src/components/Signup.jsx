@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 
 const Signup = () => {
-    const { user } = useSelector((state) => state.auth);
+    const { user, isLoading } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(UserSignupZodSchema) });
     const dispatch = useDispatch();
@@ -155,8 +155,9 @@ const Signup = () => {
                     <button
                         type="submit"
                         className="py-3.5 px-7 text-sm font-semibold tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                        disabled={isLoading}
                     >
-                        Sign up
+                        { isLoading ? "Processing..." : "Sign up"}
                     </button>
                     <p className="text-gray-800 text-sm !mt-8 text-center">
                         Already have an account?
