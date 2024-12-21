@@ -10,8 +10,13 @@ import Spinner from "./Spinner"
 
 const AdminPanel = () => {
   const [users, setUsers] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
   const { currentPage, isLoading } = useSelector((state) => state.auth);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen); // Toggle sidebar visibility
+};
 
   const fetchAllUsers = async (currentPage) => {
     const { payload } = await dispatch(GetAllUsers(currentPage));
@@ -24,10 +29,10 @@ const AdminPanel = () => {
 
   return (
     <div className="relative font-[sans-serif] pt-[70px] h-screen">
-      <AdminHeader />
+      <AdminHeader toggleSidebar={toggleSidebar} isOpen={isOpen}/>
       <div>
         <div className="flex items-start">
-          <AdminNavbar />
+          <AdminNavbar isOpen={isOpen}/>
           <section className="main-content w-full overflow-auto p-6">
             <div className="overflow-x-auto">
               <AdminFeature totalUsers={users?.totalUsers} activeUsers={users?.activeUsers} />

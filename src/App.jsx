@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      { role !== "admin" && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
@@ -53,7 +53,7 @@ const App = () => {
           }
         />
       </Routes>
-      { role !== "admin" && <Footer />}
+      <Footer />
     </BrowserRouter>
   )
 }
