@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import AdminFeature from "./AdminFeature"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
