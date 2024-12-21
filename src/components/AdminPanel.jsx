@@ -1,26 +1,18 @@
 import AdminFeature from "./AdminFeature"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { GetAllUsers } from "../features/auth/authAction"
-import AdminHeader from "./AdminHeader"
 import AdminTableData from "./AdminTableData"
-import AdminNavbar from "./AdminNavbar"
 import Pagination from "./Pagination"
 import Spinner from "./Spinner"
+import InputSearch from "./InputSearch"
 
 const AdminPanel = () => {
-  const [users, setUsers] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
+  const { users, totalPages, currentPage, isLoading, totalUsers, activeUsers } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { currentPage, isLoading } = useSelector((state) => state.auth);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen); // Toggle sidebar visibility
-};
 
   const fetchAllUsers = async (currentPage) => {
-    const { payload } = await dispatch(GetAllUsers(currentPage));
-    setUsers(payload.data);
+    await dispatch(GetAllUsers(currentPage));
   };
 
   useEffect(() => {
@@ -28,14 +20,13 @@ const AdminPanel = () => {
   }, [dispatch, currentPage]);
 
   return (
-    <div className="relative font-[sans-serif] pt-[70px] h-screen">
-      <AdminHeader toggleSidebar={toggleSidebar} isOpen={isOpen}/>
+    <div className="relative font-[sans-serif] min-h-screen flex flex-col">
       <div>
         <div className="flex items-start">
-          <AdminNavbar isOpen={isOpen}/>
           <section className="main-content w-full overflow-auto p-6">
             <div className="overflow-x-auto">
-              <AdminFeature totalUsers={users?.totalUsers} activeUsers={users?.activeUsers} />
+              <AdminFeature totalUsers={totalUsers} activeUsers={activeUsers} />
+              <InputSearch />
               {
                 isLoading ? <Spinner /> :
                   <table className="min-w-full bg-white">
@@ -60,7 +51,7 @@ const AdminPanel = () => {
                     </thead>
                     <tbody className="whitespace-nowrap">
                       {
-                        users?.users.map((user) => {
+                        users?.map((user) => {
                           return user.role !== "admin" && <AdminTableData key={user._id} {...user} />;
                         })
                       }
@@ -69,11 +60,10 @@ const AdminPanel = () => {
               }
             </div>
             <Pagination
-              totalPages={users?.totalPages}
-              currentPage={users?.currentPage}
+              totalPages={totalPages}
+              currentPage={currentPage}
               onPageChange={(page) => dispatch(GetAllUsers(page))}
             />
-
           </section>
         </div>
       </div>

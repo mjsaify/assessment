@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DeleteUserProfile, UpdateUserProfile } from "../features/auth/authAction";
 import toast from 'react-hot-toast';
 
+
 const Profile = () => {
     const { user, isLoading } = useSelector((state) => state.auth);
     const [profileImage, setProfileImage] = useState(null);

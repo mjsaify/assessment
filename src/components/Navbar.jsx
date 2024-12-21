@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user, role } = useSelector((state) => state.auth);
+    const { user, role, isLoading } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
@@ -62,25 +62,20 @@ const Navbar = () => {
                                 />
                             </div>
                         </li>
-                        {
-                            role === "user" &&
-                            <>
-                                <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-                                    <Link to="/"
-                                        className="hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]"
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-                                    <Link to="/contact"
-                                        className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]"
-                                    >
-                                        Contact
-                                    </Link>
-                                </li>
-                            </>
-                        }
+                        <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
+                            <Link to="/"
+                                className="hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]"
+                            >
+                                Home
+                            </Link>
+                        </li>
+                        <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
+                            <Link to="/contact"
+                                className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]"
+                            >
+                                Contact
+                            </Link>
+                        </li>
                         {
                             role === "admin" &&
                             <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
@@ -108,8 +103,8 @@ const Navbar = () => {
                     {
                         user ? (
 
-                            <button type="button" onClick={handleLogout} className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                Logout
+                            <button type="button" onClick={handleLogout} className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" disabled={isLoading}>
+                                {isLoading ? "Logging out" : "Logout"}
                             </button>
                         ) : (
                             <>

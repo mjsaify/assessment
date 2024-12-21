@@ -57,7 +57,7 @@ const ForgotPassword = () => {
                                     className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? "Please wait..." : "Send OTP"}
+                                    {isLoading ? "Please wait..." : "Send Reset Link"}
                                 </button>
                             </div>
                         </form>

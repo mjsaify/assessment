@@ -12,7 +12,11 @@ const initialState = {
     success: false,
     totalUsers: null,
     totalPages: null,
-    currentPage: null
+    currentPage: null,
+    activeUsers: null,
+    users: [],
+    filterdUsers: [],
+    unFilteredUsers: [],
 };
 
 export const AuthSlice = createSlice({
@@ -22,7 +26,21 @@ export const AuthSlice = createSlice({
         setCredentials: (state, action) => {
             state.user = action.payload.data.user;
             state.role = action.payload.data.user.role;
-        }
+        },
+        searchUsers: (state, action) => {
+            const search = action.payload.search.toLowerCase();
+            if (search === "") {
+                state.users = state.unFilteredUsers;
+            } else {
+                state.filterdUsers = state.users.filter((user) => (
+                    Object.values(user)
+                        .join(" ")
+                        .toLowerCase()
+                        .includes(search)
+                ));
+                state.users = state.filterdUsers;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -115,6 +133,9 @@ export const AuthSlice = createSlice({
                 state.totalUsers = action.payload.data.totalUsers;
                 state.totalPages = action.payload.data.totalPages;
                 state.currentPage = action.payload.data.currentPage;
+                state.users = action.payload.data.users;
+                state.activeUsers = action.payload.data.activeUsers;
+                state.unFilteredUsers = action.payload.data.users;
             })
             .addCase(GetAllUsers.rejected, (state, action) => {
                 state.isLoading = false;
@@ -181,5 +202,5 @@ export const AuthSlice = createSlice({
     }
 });
 
-export const { setCredentials } = AuthSlice.actions;
+export const { setCredentials, searchUsers } = AuthSlice.actions;
 export default AuthSlice.reducer;

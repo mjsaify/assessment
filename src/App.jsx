@@ -6,7 +6,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Contact from './components/Contact';
 import Profile from './components/Profile';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useGetUserDetailsQuery } from './features/auth/authApi';
 import { useEffect } from 'react';
 import { setCredentials } from './features/auth/authSlice';
@@ -16,7 +16,6 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 
 const App = () => {
-  const { role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { data } = useGetUserDetailsQuery({
     pollingInterval: 900000, // refetch every 15mins
@@ -34,8 +33,8 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/forgot-password' element={<ForgotPassword/>}/>
-        <Route path='/reset-password' element={<ResetPassword/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
         <Route
           path='/profile'
           element={
@@ -53,7 +52,7 @@ const App = () => {
           }
         />
       </Routes>
-      { role !== "admin" && <Footer />}
+      <Footer />
     </BrowserRouter>
   )
 }

@@ -11,7 +11,7 @@ const Login = () => {
     const { isLoading, user, role } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(UserLoginZodSchema) });
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(UserLoginZodSchema), defaultValues: { email: "admin@gmail.com", password: "Admin@123"} });
 
     const onSubmit = async (data) => {
         const response = await dispatch(LoginUser(data));
@@ -22,7 +22,7 @@ const Login = () => {
         return toast.success(response.payload?.message);
     };
 
-    // when user visits login page it checks if the user is loggedin, if user is present it redirects to the profile page, stop the loggedin user fro accessing login page
+    // when user visits login page it checks if the user is loggedin, if user is present it redirects to the profile page, and stops the loggedin user fro accessing login page
     useEffect(() => {
         if (user) {
             if (role === "user") {
