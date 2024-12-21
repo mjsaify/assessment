@@ -6,12 +6,15 @@ import toast from "react-hot-toast";
 
 
 const Navbar = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const { user, role, isLoading } = useSelector((state) => state.auth);
+    const { user, role } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
+        setIsLoading(true)
         const { payload } = await dispatch(LogoutUser());
+        setIsLoading(false)
         return toast.success(payload.message);
     };
 
