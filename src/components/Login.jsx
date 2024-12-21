@@ -11,7 +11,7 @@ const Login = () => {
     const { isLoading, user, role } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(UserLoginZodSchema), defaultValues: { email: "admin@gmail.com", password: "Admin@123"} });
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(UserLoginZodSchema) });
 
     const onSubmit = async (data) => {
         const response = await dispatch(LoginUser(data));
